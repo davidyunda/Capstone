@@ -5,7 +5,7 @@
 # Verify you can read the name, college ID and GPA for an example student.  Verify when you print an example student, the GPA is included. 
 # Add some comments in your code to compare the dataclass version to the "traditional" version.
 
-#I noticed that using the dataclass version is more simple, esasier and redeable than
+#I noticed that using the dataclass version is more straightforward, easier and more readable than
 #the traditional way 
 
 from dataclasses import dataclass
