@@ -1,6 +1,9 @@
 """
-A menu - you need to add the database and fill in the functions. 
+This program allows the user to add basic information like the name, country and numbers of catches for each record 
+holder of Chainsaw Juggling as well as delete or update based on their name
 """
+import peewee
+from RecordHolder import Records
 
 
 def main():
@@ -30,19 +33,40 @@ def main():
 
 
 def display_all_records():
-    print('todo display all records')
+    all_records = Records.select()
+    for record in all_records:
+        print(record)
 
 
 def add_new_record():
-    print('todo add new record. What if user wants to add a record that already exists?')
+    record_name = input('Enter name:')
+    record_country = input('Enter country: ')
+    record_catches = int(input('Enter the number of catches: '))
+    try:
+        new_record = Records(name=record_name, country=record_country, number_of_catches=record_catches)
+        new_record.save()
+    except peewee.IntegrityError:
+        print('Error adding record')
 
 
 def edit_existing_record():
-    print('todo edit existing record. What if user wants to edit record that does not exist?') 
+    change_name = input('Enter name: ')
+    match_record = Records.get_or_none(Records.name == change_name)
+    if match_record:
+        catches = int(input('Enter the number of catches: '))
+        match_record.number_of_catches = catches
+        match_record.save()
+    else:
+        print('Name not found')
 
 
 def delete_record():
-    print('todo delete existing record. What if user wants to delete record that does not exist?') 
+    delete_name = input('Enter name: ')
+    match_record = Records.get_or_none(Records.name == delete_name)
+    if match_record:
+        match_record.delete().where(Records.name == delete_name).execute()
+    else:
+        print('Name not found')
 
 
 if __name__ == '__main__':
