@@ -12,22 +12,17 @@ class Author:
         self.books = []
 
     def publish(self, title):
-        self.books.append(title)        
-    
-    def __str__(self):
+        # check for duplicates here 
         not_duplicated = set(self.books)
-        new_list = []
+        not_duplicated.add(title)
+        if len(not_duplicated) == len(self.books): # book was not added, it is a duplicate 
+            print(f'Duplicate book {title} not added ')
+        else:
+            self.books.append(title)  # otherwise, add new book 
         
-        for b in not_duplicated:
-            if b in self.books:
-                new_list.append(b)
-                self.books.remove(b)
-            
-        titles = ', '.join(new_list) or 'No published books'
-        if len(self.books) > 0:
-            print('This books were duplicated: ')
-            print(self.books)
-    
+        
+    def __str__(self):            
+        titles = ', '.join(self.books) or 'No published books'    
         return f'{self.name}. Books: {titles} '
 
 def main():
